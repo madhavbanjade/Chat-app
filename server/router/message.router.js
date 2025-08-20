@@ -4,8 +4,8 @@ import {
   receiveMessage,
   sendMessage,
 } from "../controller/message.Controller.js";
-import { media } from "../middleware/multer/messageMulter.js";
-import { Protected } from "../middleware/Protected.js";
+import { media } from "../src/middleware/multer/messageMulter.js";
+import { Protected } from "../src/middleware/Protected.js";
 
 const messageRouter = Router();
 

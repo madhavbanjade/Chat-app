@@ -5,10 +5,10 @@ import errorMiddleware from "./src/middleware/errorMiddleware.js";
 import http from "http";
 import path from "path";
 import cors from "cors";
-import { userRouter } from "./src/Routes/user.route.js";
-import messageRouter from "./src/Routes/message.route.js";
+import { userRouter } from "./router/user.router.js";
+import messageRouter from "./router/message.router.js";
 import { Server } from "socket.io";
-import { Message } from "./src/models/message.model.js";
+import { Message } from "./models/message.model.js";
 
 dotenv.config();
 const app = express();

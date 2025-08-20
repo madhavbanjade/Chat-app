@@ -1,6 +1,6 @@
-import { token } from "../../utils/jwt.js";
-import { User } from "../models/user.model.js";
+import { token } from "../utils/jwt.js";
 import { Message } from "../models/message.model.js";
+import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 
 export const register = async (req, res, next) => {
