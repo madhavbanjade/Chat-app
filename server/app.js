@@ -83,10 +83,12 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use(errorMiddleware);
 //routes
 app.get("/", (req, res) => res.send({ message: "Hello vercel" }));
 app.use("/api", userRouter);
 app.use("/api/messages", messageRouter);
+
+app.use(errorMiddleware);
+
 connectDB();
 server.listen(port, () => console.log(`Server is listining on port ${port}`));
