@@ -16,9 +16,20 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(express.static(path.resolve("./public")));
 // Allow frontend (React) to call backend
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://chat-app-yvh1.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "https://chat-app-yvh1.vercel.app", // frontend URL
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
