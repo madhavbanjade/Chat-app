@@ -1,14 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./utils/database.js";
-import userRouter from "./src/routes/User.route.js";
 import errorMiddleware from "./src/middleware/errorMiddleware.js";
 import http from "http";
 import path from "path";
 import cors from "cors";
-import messageRouter from "./src/routes/Message.route.js";
+import messageRouter from "./src/routes/message.route.js";
+import userRouter from "./src/routes/user.route.js";
 import { Server } from "socket.io";
-import { Message } from "./src/models/Message.model.js";
+import { Message } from "./src/models/message.model.js";
 
 dotenv.config();
 const app = express();
