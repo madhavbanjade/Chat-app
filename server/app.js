@@ -18,7 +18,7 @@ app.use(express.static(path.resolve("./public")));
 // Allow frontend (React) to call backend
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend URL
+    origin: "https://chat-app-yvh1.vercel.app/", // frontend URL
     credentials: true,
   })
 );
