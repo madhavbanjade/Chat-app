@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./utils/database.js";
-import { userRouter } from "./src/routes/User.route.js";
+import { userRouter } from "./src/routes/user.route.js";
 import errorMiddleware from "./src/middleware/errorMiddleware.js";
 import http from "http";
 import path from "path";
