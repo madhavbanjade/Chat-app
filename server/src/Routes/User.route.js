@@ -8,7 +8,7 @@
   import { Protected } from "../middleware/Protected.js";
   import { upload } from "../middleware/multer/userMulter.js";
 
-  const userRouter = Router();
+  export const userRouter = Router();
   userRouter.route("/register").post(register);
   userRouter.route("/login").post(login);
   userRouter
@@ -16,4 +16,4 @@
     .put(Protected, upload.single("avatar"), updateProfile);
   userRouter.route("/get-users").get(Protected, getUsers);
 
-  export default userRouter;
+  
