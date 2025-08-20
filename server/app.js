@@ -6,7 +6,7 @@ import errorMiddleware from "./src/middleware/errorMiddleware.js";
 import http from "http";
 import path from "path";
 import cors from "cors";
-import { messageRouter } from "./src/Routes/Message.route.js";
+import { messageRouter } from "./src/routes/Message.route.js";
 import { Server } from "socket.io";
 import { Message } from "./src/models/Message.model.js";
 
