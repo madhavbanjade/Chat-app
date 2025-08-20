@@ -5,17 +5,16 @@ import errorMiddleware from "./src/middleware/errorMiddleware.js";
 import http from "http";
 import path from "path";
 import cors from "cors";
-import { userRouter } from "./router/user.router.js";
-import messageRouter from "./router/message.router.js";
+import { userRouter } from "./src/routes/user.route.js";
+import messageRouter from "./src/routes/message.route.js";
 import { Server } from "socket.io";
-import { Message } from "./models/message.model.js";
+import { Message } from "./src/models/message.model.js";
 
 dotenv.config();
 const app = express();
 const port = process.env.PORT;
-app.use(express.json());
-app.use(express.static(path.resolve("./public")));
-// Allow frontend (React) to call backend
+
+// ✅ CORS first, before routes
 const allowedOrigins = [
   "http://localhost:5173",
   "https://chat-app-yvh1.vercel.app",
@@ -34,61 +33,31 @@ app.use(
   })
 );
 
+app.use(express.json());
+app.use(express.static(path.resolve("./public")));
+
 const server = http.createServer(app);
-const io = new Server(server);
-
-io.on("connection", (socket) => {
-  console.log("connected to socket.io");
-
-  socket.on("setup", (userData) => {
-    socket.join(userData._id);
-    console.log(`user: ${userData._id} joined their room`);
-    socket.emit("connected");
-  });
-
-  socket.on("join chat", (room) => {
-    socket.join(room);
-    console.log("User joined Room:" + room);
-  });
-
-  //send message
-  socket.on("new message", (newMessageReceived) => {
-    const { sender, receiver } = newMessageReceived;
-
-    if (!receiver) return console.log("Receiver not defined");
-
-    // Send to receiver's room
-    socket.in(receiver).emit("message received", newMessageReceived);
-  });
-
-  //seen
-  socket.on("mark messages seen", async ({ senderId, receiverId }) => {
-    try {
-      await Message.updateMany(
-        { sender: senderId, receiver: receiverId, seen: false },
-        { $set: { seen: true } }
-      );
-
-      // ✅ notify only the sender that their messages were seen
-      io.to(senderId).emit("messages seen", { by: receiverId });
-
-      console.log(`Messages from ${senderId} marked seen by ${receiverId}`);
-    } catch (error) {
-      console.error("❌ Error marking messages as seen:", error);
-    }
-  });
-
-  socket.on("disconnect", () => {
-    console.log("❌ User disconnected:", socket.id);
-  });
+const io = new Server(server, {
+  cors: {
+    origin: allowedOrigins,
+    credentials: true,
+  },
 });
 
-//routes
+// ✅ socket.io stuff
+io.on("connection", (socket) => {
+  console.log("connected to socket.io");
+  // ...
+});
+
+// ✅ Routes
 app.get("/", (req, res) => res.send({ message: "Hello vercel" }));
 app.use("/api", userRouter);
 app.use("/api/messages", messageRouter);
 
+// ✅ Error middleware must be last
 app.use(errorMiddleware);
 
+// DB + server
 connectDB();
-server.listen(port, () => console.log(`Server is listining on port ${port}`));
+server.listen(port, () => console.log(`Server is listening on port ${port}`));
