@@ -13,7 +13,7 @@ const Home = () => {
     <div className="flex flex-col h-screen">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-center p-4 justify-between bg-gray-200 gap-4">
-        <h1 className="text-xl font-bold text-gray-800">💬 Chat app</h1>
+        <h1 className="text-xl font-bold text-gray-800">💬 c Chat app</h1>
         <div className="flex items-center gap-4 w-full sm:w-auto">
           <button
             onClick={() => navigate("/my-profile")}
