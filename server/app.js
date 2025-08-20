@@ -6,7 +6,7 @@ import http from "http";
 import path from "path";
 import cors from "cors";
 import userRouter from "./src/routes/user.route.js";
-import messageRouter from "./src/Routes/message.route.js";
+import messageRouter from "./src/routes/message.route.js";
 import { Server } from "socket.io";
 import { Message } from "./src/models/message.model.js";
 
