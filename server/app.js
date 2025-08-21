@@ -19,7 +19,7 @@ app.use(express.static(path.resolve("./public")));
 // Allow frontend (React) to call backend
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["https://chatting-azure.vercel.app"],
     methods: ["POST", "GET", "PUT"],
     credentials: true,
   })
