@@ -18,12 +18,13 @@ app.use(express.json());
 app.use(express.static(path.resolve("./public")));
 
 // Allow only your frontend domain(s)
-app.use(
-  cors({
-    origin: "https://chatting-azure.vercel.app", // your frontend URL
-    credentials: true, // if you're using cookies or auth headers
-  })
-);
+// app.use(
+//   cors({
+//     origin: "https://chatting-azure.vercel.app", // your frontend URL
+//     credentials: true, // if you're using cookies or auth headers
+//   })
+// );
+app.options("*", cors());
 
 const server = http.createServer(app);
 const io = new Server(server);
