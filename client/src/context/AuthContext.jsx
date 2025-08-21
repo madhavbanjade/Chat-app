@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
-const api = import.meta.env.VITE_SERVER;
 
 const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
@@ -23,7 +22,7 @@ const AuthProvider = ({ children }) => {
 
   const register = async (formData) => {
     try {
-      await axios.post(`${api}/register`, formData);
+      await axios.post("https://chat-app-theta-eight-87.vercel.app/api/register", formData);
       //auto login with same
       const loginData = await login({
         email: formData.email,
@@ -37,7 +36,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (formData) => {
     try {
-      const res = await axios.post(`${api}/login`, formData);
+      const res = await axios.post("https://chat-app-theta-eight-87.vercel.app/api/login", formData);
       setUser(res.data.user);
       setToken(res.data.accessToken);
 
@@ -56,16 +55,12 @@ const AuthProvider = ({ children }) => {
 
   const updateProfile = async (formData) => {
     try {
-      const res = await axios.put(
-        `${api}/update-profile/${user._id}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const res = await axios.put("https://chat-app-theta-eight-87.vercel.app/api/update-profile/${user._id}", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       //update user state and local
       //should be aware about what you send as response in backend for user
@@ -78,7 +73,7 @@ const AuthProvider = ({ children }) => {
 
   const getUsers = async () => {
     try {
-      const res = await axios.get(`${api}/get-users`, {
+      const res = await axios.get("https://chat-app-theta-eight-87.vercel.app/api/get-users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

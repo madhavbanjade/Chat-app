@@ -2,7 +2,6 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import socket from "../components/socket/Socket";
 import { AuthContext } from "../context/AuthContext";
-const api = import.meta.env.VITE_SERVER;
 
 const MessageContext = createContext();
 const MessageProvider = ({ children }) => {
@@ -31,7 +30,7 @@ const MessageProvider = ({ children }) => {
       if (content) formData.append("content", content);
       if (file) formData.append("media", file);
       const res = await axios.post(
-        `${api}/messages/send-message/${receiverId}`,
+        `https://chat-app-theta-eight-87.vercel.app/api/messages/send-message/${receiverId}`,
         formData,
         {
           headers: {
@@ -58,11 +57,14 @@ const MessageProvider = ({ children }) => {
   const getMessages = async (userId) => {
     setLoading(true);
     try {
-      const res = await axios.get(`${api}/messages/receive-message/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const res = await axios.get(
+        `https://chat-app-theta-eight-87.vercel.app/api/messages/receive-message/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (res.data.success) {
         setMessages(res.data.messages);
         socket.emit("join chat", userId);
@@ -80,7 +82,7 @@ const MessageProvider = ({ children }) => {
   const markMessageAsSeen = async (senderId) => {
     try {
       await axios.put(
-        `${api}/messages/seen/${senderId}`,
+        `https://chat-app-theta-eight-87.vercel.app/api/messages/seen/${senderId}`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
