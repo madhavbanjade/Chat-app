@@ -3,7 +3,7 @@ import {
   markMessageAsSeen,
   receiveMessage,
   sendMessage,
-} from "../controller/message.Controller.js";
+} from "../controller/message.controller.js";
 import { media } from "../src/middleware/multer/messageMulter.js";
 import { Protected } from "../src/middleware/Protected.js";
 
