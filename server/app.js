@@ -1,5 +1,5 @@
-import express from "express";
 import cors from "cors";
+import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./utils/database.js";
 import errorMiddleware from "./src/middleware/errorMiddleware.js";
@@ -18,26 +18,10 @@ app.use(express.json());
 app.use(express.static(path.resolve("./public")));
 
 // Allow only your frontend domain(s)
-const allowedOrigins = [
-  "https://chatting-azure.vercel.app/", // Replace with your production domain
-  "http://localhost:5173",
-];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps, curl, or Postman)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      } else {
-        return callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true, // If you are sending cookies or auth headers
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Custom headers
+    origin: "https://chatting-azure.vercel.app", // your frontend URL
+    credentials: true, // if you're using cookies or auth headers
   })
 );
 
