@@ -1,10 +1,10 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./utils/database.js";
 import errorMiddleware from "./src/middleware/errorMiddleware.js";
 import http from "http";
 import path from "path";
-import cors from "cors";
 
 import { Server } from "socket.io";
 import { Message } from "./models/message.model.js";
@@ -16,11 +16,30 @@ const app = express();
 const port = process.env.PORT;
 app.use(express.json());
 app.use(express.static(path.resolve("./public")));
-// Allow frontend (React) to call backend
+
+// Allow only your frontend domain(s)
 const allowedOrigins = [
-  "https://localhost:5173",
-  "https://chat-app-theta-eight-87.vercel.app/",
+  "https://chatting-azure.vercel.app/", // Replace with your production domain
+  "http://localhost:5173",
 ];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps, curl, or Postman)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // If you are sending cookies or auth headers
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Custom headers
+  })
+);
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
