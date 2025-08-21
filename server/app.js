@@ -18,9 +18,17 @@ app.use(express.json());
 app.use(express.static(path.resolve("./public")));
 
 // Allow only your frontend domain(s)
+const allowedOrigins = [
+  "http://localhost:5173", // Vite dev
+  "https://chatting-azure.vercel.app", // Production
+];
+
 app.use(
   cors({
-    origin: "https://chatting-azure.vercel.app",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) callback(null, true);
+      else callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
