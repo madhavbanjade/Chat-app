@@ -19,7 +19,8 @@ app.use(express.static(path.resolve("./public")));
 // Allow frontend (React) to call backend
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend URL
+    origin: ["http://localhost:5173"],
+    methods: ["POST", "GET", "PUT"],
     credentials: true,
   })
 );
