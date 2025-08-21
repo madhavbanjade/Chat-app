@@ -17,14 +17,28 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(express.static(path.resolve("./public")));
 // Allow frontend (React) to call backend
-app.use(
-  cors({
-    origin: ["https://chatting-azure.vercel.app"],
-    methods: ["POST", "GET", "PUT"],
-    credentials: true,
-  })
-);
+const allowedOrigins = [
+  "https://localhost:5173",
+  "https://chat-app-theta-eight-87.vercel.app/",
+];
 
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  next();
+});
 const server = http.createServer(app);
 const io = new Server(server);
 
