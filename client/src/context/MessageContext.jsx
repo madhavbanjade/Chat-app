@@ -31,7 +31,7 @@ const MessageProvider = ({ children }) => {
       if (content) formData.append("content", content);
       if (file) formData.append("media", file);
       const res = await axios.post(
-        `${api}/api/messages/send-message/${receiverId}`,
+        `${api}/messages/send-message/${receiverId}`,
         formData,
         {
           headers: {
@@ -58,7 +58,7 @@ const MessageProvider = ({ children }) => {
   const getMessages = async (userId) => {
     setLoading(true);
     try {
-      const res = await axios.get(`${api}/api/messages/receive-message/${userId}`, {
+      const res = await axios.get(`${api}/messages/receive-message/${userId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -80,7 +80,7 @@ const MessageProvider = ({ children }) => {
   const markMessageAsSeen = async (senderId) => {
     try {
       await axios.put(
-        `${api}/api/messages/seen/${senderId}`,
+        `${api}/messages/seen/${senderId}`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

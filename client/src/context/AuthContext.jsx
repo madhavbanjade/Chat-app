@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
 
   const register = async (formData) => {
     try {
-      await axios.post(`${api}/api/register`, formData);
+      await axios.post(`${api}/register`, formData);
       //auto login with same
       const loginData = await login({
         email: formData.email,
@@ -37,7 +37,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (formData) => {
     try {
-      const res = await axios.post(`${api}/api/login`, formData);
+      const res = await axios.post(`${api}/login`, formData);
       setUser(res.data.user);
       setToken(res.data.accessToken);
 
@@ -57,7 +57,7 @@ const AuthProvider = ({ children }) => {
   const updateProfile = async (formData) => {
     try {
       const res = await axios.put(
-        `${api}/api/update-profile/${user._id}`,
+        `${api}/update-profile/${user._id}`,
         formData,
         {
           headers: {
@@ -78,7 +78,7 @@ const AuthProvider = ({ children }) => {
 
   const getUsers = async () => {
     try {
-      const res = await axios.get(`${api}/api/get-users`, {
+      const res = await axios.get(`${api}/get-users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
