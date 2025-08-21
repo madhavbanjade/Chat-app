@@ -4,7 +4,7 @@ import {
   login,
   register,
   updateProfile,
-} from "../controller/user.controller.js";
+} from "../controllers/user.controller.js";
 import { Protected } from "../src/middleware/Protected.js";
 import { upload } from "../src/middleware/multer/userMulter.js";
 
