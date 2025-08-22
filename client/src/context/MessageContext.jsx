@@ -30,7 +30,7 @@ const MessageProvider = ({ children }) => {
       if (content) formData.append("content", content);
       if (file) formData.append("media", file);
       const res = await axios.post(
-        `https://chat-app-theta-eight-87.vercel.app/api/messages/send-message/${receiverId}`,
+        `https://chat-app-q8w9.onrender.com/api/messages/send-message/${receiverId}`,
         formData,
         {
           headers: {
@@ -58,7 +58,7 @@ const MessageProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `https://chat-app-theta-eight-87.vercel.app/api/messages/receive-message/${userId}`,
+        `https://chat-app-q8w9.onrender.com/api/messages/receive-message/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -82,7 +82,7 @@ const MessageProvider = ({ children }) => {
   const markMessageAsSeen = async (senderId) => {
     try {
       await axios.put(
-        `https://chat-app-theta-eight-87.vercel.app/api/messages/seen/${senderId}`,
+        `https://chat-app-q8w9.onrender.com/api/messages/seen/${senderId}`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

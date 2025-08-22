@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
   const register = async (formData) => {
     try {
       await axios.post(
-        "https://chat-app-theta-eight-87.vercel.app/api/register",
+        "https://chat-app-q8w9.onrender.com/api/register",
         formData
       );
       //auto login with same
@@ -40,7 +40,7 @@ const AuthProvider = ({ children }) => {
   const login = async (formData) => {
     try {
       const res = await axios.post(
-        "https://chat-app-theta-eight-87.vercel.app/api/login",
+        "https://chat-app-q8w9.onrender.com/api/login",
         formData
       );
       setUser(res.data.user);
@@ -62,7 +62,7 @@ const AuthProvider = ({ children }) => {
   const updateProfile = async (formData) => {
     try {
       const res = await axios.put(
-        `https://chat-app-theta-eight-87.vercel.app/api/update-profile/${user._id}`,
+        `https://chat-app-q8w9.onrender.com/api/update-profile/${user._id}`,
         formData,
         {
           headers: {
@@ -84,7 +84,7 @@ const AuthProvider = ({ children }) => {
   const getUsers = async () => {
     try {
       const res = await axios.get(
-        "https://chat-app-theta-eight-87.vercel.app/api/get-users",
+        "https://chat-app-q8w9.onrender.com/api/get-users",
         {
           headers: {
             Authorization: `Bearer ${token}`,
