@@ -20,7 +20,7 @@ const MessageProvider = ({ children }) => {
       setMessages((prev) => [...prev, newMessageReceived]);
     });
     return () => {
-      socket.off("receiveMessage");
+      socket.off("message received");
     };
   }, [user]);
   //send message

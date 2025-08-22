@@ -13,7 +13,7 @@ const Home = () => {
     <div className="flex flex-col h-screen">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-center p-4 justify-between bg-gray-200 gap-4">
-        <h1 className="text-xl font-bold text-gray-800">💬 c Chat app</h1>
+        <h1 className="text-xl font-bold text-gray-800">💬Chat App</h1>
         <div className="flex items-center gap-4 w-full sm:w-auto">
           <button
             onClick={() => navigate("/my-profile")}
@@ -38,10 +38,10 @@ const Home = () => {
       </div>
 
       {/* Main layout */}
-      <div className="flex flex-1 overflow-hidden relative">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <div
-          className={`bg-gray-100 z-20 w-full sm:w-[350px] sm:block absolute sm:relative h-full transition-transform duration-300 ${
+          className={`bg-gray-100 z-20 w-full overflow-y-auto sm:w-[350px] sm:block absolute sm:relative h-full transition-transform duration-300 ${
             selectedUser
               ? "-translate-x-full sm:translate-x-0"
               : "translate-x-0"
@@ -54,16 +54,12 @@ const Home = () => {
         </div>
 
         {/* Chat panel */}
-        <div
-          className={`flex-1 h-full transition-transform duration-300 ${
-            selectedUser ? "translate-x-0" : "translate-x-full sm:translate-x-0"
-          }`}
-        >
+        <div className="flex-1 h-full">
           {selectedUser ? (
             <Chat selectedUser={selectedUser} />
           ) : (
-            <div className="flex-1 flex items-center justify-center text-gray-500">
-              Select a user to start chat
+            <div className="flex h-full items-center justify-center text-gray-500 text-xl">
+              Select a user from the sidebar to start chatting
             </div>
           )}
         </div>
