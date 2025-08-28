@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { Toaster, toast } from "react-hot-toast";
 
 const Login = () => {
   const { login, register } = useContext(AuthContext); // 👈 get login function from context
@@ -25,24 +26,37 @@ const Login = () => {
     e.preventDefault();
     try {
       if (isRegister) {
-        // Call register (which auto-logins)
-        await register(formData);
+        await toast.promise(register(formData), {
+          loading: "Registering...",
+          success: "Registered successfully!",
+          error: "Could not register!",
+        });
       } else {
-        // Call login
-        await login({ email: formData.email, password: formData.password });
+        await toast.promise(
+          login({ email: formData.email, password: formData.password }),
+          {
+            loading: "Logging in...",
+            success: "Logged in successfully!",
+            error: "Invalid credentials!",
+          }
+        );
       }
 
-      navigate("/"); // 👈 redirect after login/register
+      navigate("/");
     } catch (error) {
-      alert("Invalid credentails!");
       console.error(error.message || error);
     }
+  };
 
-    console.log(isRegister ? "Registering..." : "Logging in...", formData);
+  //reset the value because we handle login and register in a same state
+  const handleClick = () => {
+    setIsRegister((prev) => !prev);
+    setFormData({ userName: "", email: "", password: "" });
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-200">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col p-4 space-y-2 bg-white rounded-2xl shadow-lg w-[350px]">
         <h1 className="text-purple-500 text-center font-bold text-2xl">
           {isRegister ? "Register" : "Login"}
@@ -85,7 +99,7 @@ const Login = () => {
 
         <p
           className="text-sm text-center text-gray-600 cursor-pointer hover:underline"
-          onClick={() => setIsRegister((prev) => !prev)}
+          onClick={handleClick}
         >
           {isRegister
             ? "Already have an account? Login"

@@ -52,7 +52,8 @@ const Sidebar = ({ setSelectedUser, selectedUser }) => {
                     className="w-12 h-12 rounded-full"
                   />
                   <h1 className="font-semibold">{user.userName}</h1>
-                  {user.unreadCount > 0 && (
+
+                  {user.unreadCount > 0 && selectedUser?._id !== user._id && (
                     <span className="ml-auto text-sm bg-red-500 text-white px-2 py-1 rounded-full">
                       {user.unreadCount}
                     </span>
